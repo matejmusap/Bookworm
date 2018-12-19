@@ -21,3 +21,6 @@
 /bookworm-frontend/npm-debug.log*
 /bookworm-frontend/yarn-debug.log*
 /bookworm-frontend/yarn-error.log*
+
+/bookworm-frontend/.env
+/bookworm-backend/.env
