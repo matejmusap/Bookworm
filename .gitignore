@@ -2,6 +2,7 @@
 
 # dependencies
 /bookworm-frontend/node_modules
+/bookworm-backend/node_modules
 /bookworm-frontend/.pnp
 /bookworm-frontend/.pnp.js
 
