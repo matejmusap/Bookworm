@@ -1,0 +1,23 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/bookworm-frontend/node_modules
+/bookworm-frontend/.pnp
+/bookworm-frontend/.pnp.js
+
+# testing
+/bookworm-frontend/coverage
+
+# production
+/bookworm-frontend/build
+
+# misc
+/bookworm-frontend/.DS_Store
+/bookworm-frontend/.env.local
+/bookworm-frontend/.env.development.local
+/bookworm-frontend/.env.test.local
+/bookworm-frontend/.env.production.local
+
+/bookworm-frontend/npm-debug.log*
+/bookworm-frontend/yarn-debug.log*
+/bookworm-frontend/yarn-error.log*
