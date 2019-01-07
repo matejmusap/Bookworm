@@ -60,6 +60,7 @@ schema.methods.generateResetPasswordToken = function generateResetPasswordToken(
     { expiresIn: "1h" }
   );
 };
+
 schema.methods.toAuthJSON = function toAuthJSON() {
   return {
     email: this.email,
