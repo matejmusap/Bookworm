@@ -2,8 +2,6 @@ import express from "express";
 import jwt from "jsonwebtoken";
 import User from "../models/User";
 import { sendResetPasswordEmail } from "../mailer";
-import { prototype } from "stream";
-import { decode } from "punycode";
 
 const router = express.Router();
 
@@ -68,4 +66,5 @@ router.post("/reset_password", (req, res) => {
     }
   });
 });
+
 export default router;
