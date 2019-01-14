@@ -29,7 +29,7 @@ const TopNavgation = ({ user, logout, hasBooks }) => (
 
 TopNavgation.propTypes = {
   user: PropTypes.shape({ email: PropTypes.string.isRequired }).isRequired,
-  hasBooks: PropTypes.book.isRequired,
+  hasBooks: PropTypes.bool.isRequired,
   logout: PropTypes.func.isRequired
 };
 
