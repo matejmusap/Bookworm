@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Form, Button, Segment, Grid, Image } from "semantic-ui-react";
+import { Form, Button, Grid, Segment, Image } from "semantic-ui-react";
+import InlineError from "../messages/InlineError";
 
 class BookForm extends React.Component {
   state = {
@@ -49,7 +50,7 @@ class BookForm extends React.Component {
     e.preventDefault();
     const errors = this.validate(this.state.data);
     this.setState({ errors });
-    if (Object.keys(errors).lenght === 0) {
+    if (Object.keys(errors).length === 0) {
       this.setState({ loading: true });
       this.props
         .submit(this.state.data)
@@ -61,7 +62,7 @@ class BookForm extends React.Component {
 
   changeCover = () => {
     const { index, covers } = this.state;
-    const newIndex = index + 1 > covers.length ? 0 : index + 1;
+    const newIndex = index + 1 >= covers.length ? 0 : index + 1;
     this.setState({
       index: newIndex,
       data: { ...this.state.data, cover: covers[newIndex] }
@@ -70,21 +71,23 @@ class BookForm extends React.Component {
 
   validate = data => {
     const errors = {};
-    if (!data.title) errors.title = "Title field can't be blank!";
-    if (!data.author) errors.author = "Author field can't be blank!";
-    if (!data.pages) errors.Pages = "Pages field can't be blank!";
+    if (!data.title) errors.title = "Can't be blank";
+    if (!data.authors) errors.authors = "Can't be blank";
+    if (!data.pages) errors.pages = "Can't be blank";
     return errors;
   };
+
   render() {
     const { errors, data, loading } = this.state;
+
     return (
       <Segment>
         <Form onSubmit={this.onSubmit} loading={loading}>
-          <Grid columns={2} fluid stackable>
+          <Grid columns={2} stackable>
             <Grid.Row>
-              <Grid.Collumn>
-                <Form.Field errors={errors.title}>
-                  <label htmlFor="title">Book title</label>
+              <Grid.Column>
+                <Form.Field error={!!errors.title}>
+                  <label htmlFor="title">Book Title</label>
                   <input
                     type="text"
                     id="title"
@@ -93,38 +96,47 @@ class BookForm extends React.Component {
                     value={data.title}
                     onChange={this.onChange}
                   />
+                  {errors.title && <InlineError text={errors.title} />}
                 </Form.Field>
-                <Form.Field errors={errors.authors}>
-                  <label htmlFor="authors">Book authrors:</label>
+
+                <Form.Field error={!!errors.authors}>
+                  <label htmlFor="authors">Book Authors</label>
                   <input
                     type="text"
                     id="authors"
                     name="authors"
-                    placeholder="Author"
+                    placeholder="Authors"
                     value={data.authors}
                     onChange={this.onChange}
                   />
+                  {errors.authors && <InlineError text={errors.authors} />}
                 </Form.Field>
-                <Form.Field errors={errors.pages}>
-                  <label htmlFor="pages">Number of pages:</label>
+
+                <Form.Field error={!!errors.pages}>
+                  <label htmlFor="pages">Pages</label>
                   <input
-                    type="number"
+                    disabled={data.pages === undefined}
+                    type="text"
                     id="pages"
                     name="pages"
-                    value={data.pages}
+                    value={data.pages !== undefined ? data.pages : "Loading..."}
                     onChange={this.onChangeNumber}
                   />
+                  {errors.pages && <InlineError text={errors.pages} />}
                 </Form.Field>
-              </Grid.Collumn>
-              <Grid.Collumn>
+              </Grid.Column>
+
+              <Grid.Column>
                 <Image size="small" src={data.cover} />
                 {this.state.covers.length > 1 && (
+                  // eslint-disable-next-line
                   <a role="button" tabIndex={0} onClick={this.changeCover}>
                     Another cover
                   </a>
                 )}
-              </Grid.Collumn>
+              </Grid.Column>
             </Grid.Row>
+
             <Grid.Row>
               <Button primary>Save</Button>
             </Grid.Row>
@@ -142,7 +154,7 @@ BookForm.propTypes = {
     title: PropTypes.string.isRequired,
     authors: PropTypes.string.isRequired,
     covers: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-    pages: PropTypes.number.isRequired
+    pages: PropTypes.number
   }).isRequired
 };
 
